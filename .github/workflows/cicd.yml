@@ -1,0 +1,73 @@
+name: Deploy React Loyalty backend application
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+    aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_STORAGE_BUCKET_NAME:  ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+    AWS_S3_REGION_NAME:  ${{ secrets.AWS_S3_REGION_NAME }}
+    AWS_S3_CUSTOM_DOMAIN: ${{ secrets.AWS_S3_CUSTOM_DOMAIN }}
+
+    AWS_CLOUDFRONT_KEY_ID: ${{ secrets.AWS_CLOUDFRONT_KEY_ID }}
+    AWS_CLOUDFRONT_KEY: ${{ secrets.AWS_CLOUDFRONT_KEY }}
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Build docker image
+        run: sudo docker build -t tengoshamugia/loyalty_backend .
+      - name: Login to docker hub
+        run: sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Publish image to docker hub
+        run: sudo docker push tengoshamugia/loyalty_backend:latest
+
+
+  deploy-1:
+    needs: build
+    runs-on: ["self-hosted", "first"]
+    steps:
+      - name: Stop old container
+        run: sudo docker stop loyalty_backend || true
+
+      - name: Remove old container
+        run: sudo docker rm loyalty_backend || true
+
+      - name: Remove unused images
+        run: sudo docker image prune -f
+
+      - name: Pull image from Docker Hub
+        run: sudo docker pull tengoshamugia/loyalty_backend:latest
+
+      - name: Run new Docker container
+        run: sudo docker run -d -p 8000:8000 --name loyalty_backend tengoshamugia/loyalty_backend
+
+
+
+
+
+  # deploy-2:
+  #   needs: build
+  #   runs-on: ["self-hosted", "second"]
+  #   steps:
+  #     - name: Stop old container
+  #       run: sudo docker stop loyalty_frontend || true
+
+  #     - name: Remove old container
+  #       run: sudo docker rm loyalty_frontend || true
+
+  #     - name: Remove unused images
+  #       run: sudo docker image prune -f
+
+  #     - name: Pull image from Docker Hub
+  #       run: sudo docker pull tengoshamugia/loyalty_frontend:latest
+
+  #     - name: Run new Docker container
+  #       run: sudo docker run -d -p 3000:3000 --name loyalty_frontend tengoshamugia/loyalty_frontend
