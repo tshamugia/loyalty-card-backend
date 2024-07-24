@@ -25,8 +25,19 @@ jobs:
     steps: 
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name:
-        run: echo "$DB_NAME, $DB_PASSWORD, $DB_HOST ---->>> $AWS_S3_CUSTOM_DOMAIN"
+      - name: Create .env.prod file
+        run: |
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env.prod
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env.prod
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env.prod
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env.prod
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env.prod
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.prod
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.prod
+          echo "AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> .env.prod
+          echo "AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }}" >> .env.prod
+          echo "AWS_S3_CUSTOM_DOMAIN=${{ secrets.AWS_S3_CUSTOM_DOMAIN }}" >> .env.prod
+
       - name: Build docker image
         run: sudo docker build -t tengoshamugia/loyalty_backend .
       - name: Login to docker hub
@@ -37,44 +48,50 @@ jobs:
 
 
 
-  # deploy-1:
-  #   needs: build
-  #   runs-on: ["self-hosted", "first"]
-  #   steps:
-  #     - name: Stop old container
-  #       run: sudo docker stop loyalty_backend || true
+  deploy-1:
+    needs: build
+    runs-on: ["self-hosted", "first"]
+    steps:
+      - name: Stop old container
+        run: sudo docker stop loyalty_backend || true
 
-  #     - name: Remove old container
-  #       run: sudo docker rm loyalty_backend || true
+      - name: Remove old container
+        run: sudo docker rm loyalty_backend || true
 
-  #     - name: Remove unused images
-  #       run: sudo docker image prune -f
+      - name: Remove unused containers
+        run: sudo docker container prune -f || true
 
-  #     - name: Pull image from Docker Hub
-  #       run: sudo docker pull tengoshamugia/loyalty_backend:latest
+      - name: Remove unused images
+        run: sudo docker image prune -f
 
-  #     - name: Run new Docker container
-  #       run: sudo docker run -d -p 8000:8000 --name loyalty_backend tengoshamugia/loyalty_backend
+      - name: Pull image from Docker Hub
+        run: sudo docker pull tengoshamugia/loyalty_backend:latest
+
+      - name: Run new Docker container
+        run: sudo docker run -d -p 8000:8000 --env-file .env.prod --name loyalty_backend tengoshamugia/loyalty_backend
 
 
 
 
 
-  # deploy-2:
-  #   needs: build
-  #   runs-on: ["self-hosted", "second"]
-  #   steps:
-  #     - name: Stop old container
-  #       run: sudo docker stop loyalty_backend || true
+  deploy-2:
+    needs: build
+    runs-on: ["self-hosted", "second"]
+    steps:
+      - name: Stop old container
+        run: sudo docker stop loyalty_backend || true
 
-  #     - name: Remove old container
-  #       run: sudo docker rm loyalty_backend || true
+      - name: Remove old container
+        run: sudo docker rm loyalty_backend || true
 
-  #     - name: Remove unused images
-  #       run: sudo docker image prune -f
+      - name: Remove unused containers
+        run: sudo docker container prune -f || true
 
-  #     - name: Pull image from Docker Hub
-  #       run: sudo docker pull tengoshamugia/loyalty_backend:latest
+      - name: Remove unused images
+        run: sudo docker image prune -f
 
-  #     - name: Run new Docker container
-  #       run: sudo docker run -d -p 8000:8000 --name loyalty_backend tengoshamugia/loyalty_backend
+      - name: Pull image from Docker Hub
+        run: sudo docker pull tengoshamugia/loyalty_backend:latest
+
+      - name: Run new Docker container
+        run: sudo docker run -d -p 8000:8000 --env-file .env.prod --name loyalty_backend tengoshamugia/loyalty_backend
