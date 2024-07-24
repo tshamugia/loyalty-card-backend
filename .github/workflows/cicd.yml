@@ -23,6 +23,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
+      - name: Checkout Source
+        uses: actions/checkout@v4
 
       - name: Build docker image
         run: sudo docker build -t tengoshamugia/loyalty_backend .
