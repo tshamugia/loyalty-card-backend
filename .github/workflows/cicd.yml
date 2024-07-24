@@ -44,6 +44,11 @@ jobs:
         run: sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASS }}
       - name: Publish image to docker hub
         run: sudo docker push tengoshamugia/loyalty_backend:latest
+      - name: Upload .env.prod
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-prod
+          path: .env.prod
 
 
 
@@ -52,6 +57,11 @@ jobs:
     needs: build
     runs-on: ["self-hosted", "first"]
     steps:
+      - name: Download .env.prod
+        uses: actions/download-artifact@v3
+        with:
+          name: env-prod
+
       - name: Stop old container
         run: sudo docker stop loyalty_backend || true
 
@@ -78,6 +88,11 @@ jobs:
     needs: build
     runs-on: ["self-hosted", "second"]
     steps:
+      - name: Download .env.prod
+        uses: actions/download-artifact@v3
+        with:
+          name: env-prod
+          
       - name: Stop old container
         run: sudo docker stop loyalty_backend || true
 
