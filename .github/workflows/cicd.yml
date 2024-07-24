@@ -23,20 +23,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
-      - name: Checkout Source
-        uses: actions/checkout@v4
-      - name: Create .env.prod file
-        run: |
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env.prod
-          echo "DB_USER=${{ secrets.DB_USER }}" >> .env.prod
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env.prod
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env.prod
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env.prod
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.prod
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.prod
-          echo "AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> .env.prod
-          echo "AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }}" >> .env.prod
-          echo "AWS_S3_CUSTOM_DOMAIN=${{ secrets.AWS_S3_CUSTOM_DOMAIN }}" >> .env.prod
 
       - name: Build docker image
         run: sudo docker build -t tengoshamugia/loyalty_backend .
@@ -44,11 +30,6 @@ jobs:
         run: sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASS }}
       - name: Publish image to docker hub
         run: sudo docker push tengoshamugia/loyalty_backend:latest
-      - name: Upload .env.prod
-        uses: actions/upload-artifact@v3
-        with:
-          name: env-prod
-          path: .env.prod
 
 
 
@@ -57,10 +38,6 @@ jobs:
     needs: build
     runs-on: ["self-hosted", "first"]
     steps:
-      - name: Download .env.prod
-        uses: actions/download-artifact@v3
-        with:
-          name: env-prod
 
       - name: Stop old container
         run: sudo docker stop loyalty_backend || true
@@ -78,7 +55,7 @@ jobs:
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
 
       - name: Run new Docker container
-        run: sudo docker run -d -p 8000:8000 --env-file .env.prod --name loyalty_backend tengoshamugia/loyalty_backend
+        run: sudo docker run -d -p 8000:8000 -e DB_NAME=${{ secrets.DB_NAME }} -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_PORT=${{ secrets.DB_PORT }} -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} -e AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }} -e AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} -e AWS_S3_CUSTOM_DOMAIN=${{ secrets.AWS_S3_CUSTOM_DOMAIN }} --name loyalty_backend tengoshamugia/loyalty_backend
 
 
 
@@ -88,10 +65,7 @@ jobs:
     needs: build
     runs-on: ["self-hosted", "second"]
     steps:
-      - name: Download .env.prod
-        uses: actions/download-artifact@v3
-        with:
-          name: env-prod
+      
           
       - name: Stop old container
         run: sudo docker stop loyalty_backend || true
@@ -109,4 +83,4 @@ jobs:
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
 
       - name: Run new Docker container
-        run: sudo docker run -d -p 8000:8000 --env-file .env.prod --name loyalty_backend tengoshamugia/loyalty_backend
+        run: sudo docker run -d -p 8000:8000 -e DB_NAME=${{ secrets.DB_NAME }} -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_PORT=${{ secrets.DB_PORT }} -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} -e AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }} -e AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} -e AWS_S3_CUSTOM_DOMAIN=${{ secrets.AWS_S3_CUSTOM_DOMAIN }} --name loyalty_backend tengoshamugia/loyalty_backend
