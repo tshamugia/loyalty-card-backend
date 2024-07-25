@@ -42,16 +42,19 @@ jobs:
     steps:
 
       - name: Stop old container
-        run: sudo docker stop loyalty_backend || true
+        run: sudo docker stop backend || true
 
       - name: Remove old container
-        run: sudo docker rm loyalty_backend || true
+        run: sudo docker rm backend || true
 
       - name: Remove unused containers
         run: sudo docker container prune -f || true
 
       - name: Remove unused images
-        run: sudo docker image prune -f
+        run: sudo docker image prune -f || true
+      
+      - name: Remove unused containers
+        run: sudo docker container prune -f || true
 
       - name: Pull image from Docker Hub
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
@@ -75,16 +78,19 @@ jobs:
       
           
       - name: Stop old container
-        run: sudo docker stop loyalty_backend || true
+        run: sudo docker stop backend || true
 
       - name: Remove old container
-        run: sudo docker rm loyalty_backend || true
+        run: sudo docker rm backend || true
 
       - name: Remove unused containers
         run: sudo docker container prune -f || true
 
       - name: Remove unused images
-        run: sudo docker image prune -f
+        run: sudo docker image prune -f || true
+
+      - name: Remove unused containers
+        run: sudo docker container prune -f || true
 
       - name: Pull image from Docker Hub
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
