@@ -32,7 +32,7 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://20.0.0.49', 'http://35.159.168.255', 'http://35.159.168.255:8080', 'http://20.0.2.39', 'http://Final-WebServerALB-651001498.eu-central-1.elb.amazonaws.com', 'http://Final-WebServerALB-651001498.eu-central-1.elb.amazonaws.com:8080', 'http://final-webserveralb-651001498.eu-central-1.elb.amazonaws.com:8080/', 'http://final-webserveralb-651001498.eu-central-1.elb.amazonaws.com']
+CSRF_TRUSTED_ORIGINS = ['http://3.70.201.63', 'http://3.70.201.63:8080', 'http://tengoshamugia.com', 'http://tengoshamugia.com:8080']
 # CORS_ALLOWED_ORIGINS = ['http://20.0.0.49', 'http://3.72.49.200', 'http://3.72.49.200:8080', 'http://20.0.2.39']
 # CORS_ORIGIN_ALLOW_ALL = True
 
