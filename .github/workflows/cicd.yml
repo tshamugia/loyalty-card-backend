@@ -59,10 +59,10 @@ jobs:
       - name: Pull image from Docker Hub
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
       
-      - name: Ensure Docker network exists
-        run: |
-          sudo docker network inspect loyalty_network >/dev/null 2>&1 || \
-          sudo docker network create loyalty_network
+      # - name: Ensure Docker network exists
+      #   run: |
+      #     sudo docker network inspect loyalty_network >/dev/null 2>&1 || \
+      #     sudo docker network create loyalty_network
 
       - name: Run new Docker container
         run: sudo docker run -d -p 8000:8000  -e DB_NAME=${{ secrets.DB_NAME }} -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_PORT=${{ secrets.DB_PORT }} -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} -e AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }} -e AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} -e AWS_S3_CUSTOM_DOMAIN=${{ secrets.AWS_S3_CUSTOM_DOMAIN }} --name backend tengoshamugia/loyalty_backend
@@ -95,10 +95,10 @@ jobs:
       - name: Pull image from Docker Hub
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
       
-      - name: Ensure Docker network exists
-        run: |
-          sudo docker network inspect loyalty_network >/dev/null 2>&1 || \
-          sudo docker network create loyalty_network
+      # - name: Ensure Docker network exists
+      #   run: |
+      #     sudo docker network inspect loyalty_network >/dev/null 2>&1 || \
+      #     sudo docker network create loyalty_network
 
       - name: Run new Docker container
         run: sudo docker run -d -p 8000:8000  -e DB_NAME=${{ secrets.DB_NAME }} -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_PORT=${{ secrets.DB_PORT }} -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} -e AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }} -e AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} -e AWS_S3_CUSTOM_DOMAIN=${{ secrets.AWS_S3_CUSTOM_DOMAIN }} --name backend tengoshamugia/loyalty_backend
