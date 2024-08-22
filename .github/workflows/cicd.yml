@@ -17,6 +17,8 @@ env:
     AWS_STORAGE_BUCKET_NAME:  ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
     AWS_S3_REGION_NAME:  ${{ secrets.AWS_S3_REGION_NAME }}
     AWS_S3_CUSTOM_DOMAIN: ${{ secrets.AWS_S3_CUSTOM_DOMAIN }}
+    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
 
 
 jobs:
@@ -28,7 +30,7 @@ jobs:
       - name: Build docker image
         run: sudo docker build -t tengoshamugia/loyalty_backend .
       - name: Login to docker hub
-        run: sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASS }}
+        run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
       - name: Publish image to docker hub
         run: sudo docker push tengoshamugia/loyalty_backend:latest
 
