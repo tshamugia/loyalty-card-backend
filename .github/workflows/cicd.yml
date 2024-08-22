@@ -78,16 +78,16 @@ jobs:
     steps:
       - name: Create .env file
         run:
-          echo "DB_NAME=$DB_NAME" >> /home/ubuntu/.env
-          echo "DB_USER=$DB_USER" >> /home/ubuntu/.env
-          echo "DB_PASSWORD=$DB_PASSWORD" >> /home/ubuntu/.env
-          echo "DB_HOST=$DB_HOST" >> /home/ubuntu/.env
-          echo "DB_PORT=$DB_PORT" >> /home/ubuntu/.env
-          echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> /home/ubuntu/.env
-          echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> /home/ubuntu/.env
-          echo "AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME" >> /home/ubuntu/.env
-          echo "AWS_S3_REGION_NAME=$AWS_S3_REGION_NAME" >> /home/ubuntu/.env
-          echo "AWS_S3_CUSTOM_DOMAIN=$AWS_S3_CUSTOM_DOMAIN" >> /home/ubuntu/.env
+          echo "DB_NAME=$DB_NAME" >> /home/ubuntu/.env \ 
+          && echo "DB_USER=$DB_USER" >> /home/ubuntu/.env \
+          && echo "DB_PASSWORD=$DB_PASSWORD" >> /home/ubuntu/.env \
+          && echo "DB_HOST=$DB_HOST" >> /home/ubuntu/.env \
+          && echo "DB_PORT=$DB_PORT" >> /home/ubuntu/.env \
+          && echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> /home/ubuntu/.env \
+          && echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> /home/ubuntu/.env \
+          && echo "AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME" >> /home/ubuntu/.env \
+          && echo "AWS_S3_REGION_NAME=$AWS_S3_REGION_NAME" >> /home/ubuntu/.env \
+          && echo "AWS_S3_CUSTOM_DOMAIN=$AWS_S3_CUSTOM_DOMAIN" >> /home/ubuntu/.env
 
       # - name: Stop old container
       #   run: sudo docker stop backend || true
