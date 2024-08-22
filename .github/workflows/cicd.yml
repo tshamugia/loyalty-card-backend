@@ -91,6 +91,7 @@ jobs:
 
       - name: Pull image from Docker Hub
         run: sudo docker pull tengoshamugia/loyalty_backend:latest
+      
 
       - name: Run new Docker container
-        run: sudo docker run -d -p 8000:8000  -e DB_NAME=${ DB_NAME } -e DB_USER=${ DB_USER } -e DB_PASSWORD=${ DB_PASSWORD } -e DB_HOST=${ DB_HOST } -e DB_PORT=${ DB_PORT } -e AWS_ACCESS_KEY_ID=${ AWS_ACCESS_KEY_ID } -e AWS_SECRET_ACCESS_KEY=${ AWS_SECRET_ACCESS_KEY } -e AWS_STORAGE_BUCKET_NAME=${ AWS_STORAGE_BUCKET_NAME } -e AWS_S3_REGION_NAME=${ AWS_S3_REGION_NAME } -e AWS_S3_CUSTOM_DOMAIN=${ AWS_S3_CUSTOM_DOMAIN } --name backend tengoshamugia/loyalty_backend
+        run: sudo docker run -d -p 8000:8000  -e DB_NAME=$DB_NAME -e DB_USER=$DB_USER -e DB_PASSWORD=$secrets.DB_PASSWORD -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME -e AWS_S3_REGION_NAME=$AWS_S3_REGION_NAME -e AWS_S3_CUSTOM_DOMAIN=$AWS_S3_CUSTOM_DOMAIN --name backend tengoshamugia/loyalty_backend
