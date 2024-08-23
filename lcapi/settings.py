@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-ot(&459lq9*r&pq-y=%0=fafu86h!ycu%8+q^k_oj9yzsslu1d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CORS_ALLOWE_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ['*']
 # CSRF_TRUSTED_ORIGINS = ['http://3.121.216.13', 'http://3.121.216.13:8080', 'http://tengoshamugia.com', 'http://tengoshamugia.com:8080', 'https://tengoshamugia.com', 'https://tengoshamugia.com:8080']
 
