@@ -30,11 +30,11 @@ SECRET_KEY = 'django-insecure-ot(&459lq9*r&pq-y=%0=fafu86h!ycu%8+q^k_oj9yzsslu1d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
+CORS_ALLOWE_ALL_ORIGINS = True
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://3.121.216.13', 'http://3.121.216.13:8080', 'http://tengoshamugia.com', 'http://tengoshamugia.com:8080', 'https://tengoshamugia.com', 'https://tengoshamugia.com:8080']
-# CORS_ALLOWED_ORIGINS = ['http://20.0.0.49', 'http://3.72.49.200', 'http://3.72.49.200:8080', 'http://20.0.2.39']
-# CORS_ORIGIN_ALLOW_ALL = True
+# CSRF_TRUSTED_ORIGINS = ['http://3.121.216.13', 'http://3.121.216.13:8080', 'http://tengoshamugia.com', 'http://tengoshamugia.com:8080', 'https://tengoshamugia.com', 'https://tengoshamugia.com:8080']
+
+
 
 
 # Application definition:
@@ -48,15 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lcapi_app.apps.LcapiAppConfig',
     'rest_framework',
-    # 'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    # 'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
