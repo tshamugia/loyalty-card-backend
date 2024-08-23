@@ -33,7 +33,7 @@ DEBUG = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = ['http://3.121.237.247:8080', 'http://3.121.237.247']
 ALLOWED_HOSTS = ['*']
-# CSRF_TRUSTED_ORIGINS = ['http://3.121.216.13', 'http://3.121.216.13:8080', 'http://tengoshamugia.com', 'http://tengoshamugia.com:8080', 'https://tengoshamugia.com', 'https://tengoshamugia.com:8080']
+CSRF_TRUSTED_ORIGINS = ['http://3.121.237.247', 'http://3.121.237.247:8080', 'http://tengoshamugia.com', 'http://tengoshamugia.com:8080', 'https://tengoshamugia.com', 'https://tengoshamugia.com:8080']
 
 
 
